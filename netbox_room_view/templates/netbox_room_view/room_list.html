@@ -1,0 +1,41 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Comms Rooms{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Site</th>
+          <th>Room</th>
+          <th class="text-end">Racks</th>
+          <th class="text-end">On floor plan</th>
+          <th class="text-end">Racked devices</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td><a href="{{ row.location.site.get_absolute_url }}">{{ row.location.site }}</a></td>
+            <td>
+              {% if row.location.parent %}<span class="text-muted">{{ row.location.parent }} /</span>{% endif %}
+              <a href="{{ row.url }}">{{ row.location.name }}</a>
+            </td>
+            <td class="text-end">{{ row.racks }}</td>
+            <td class="text-end">{{ row.placed }} / {{ row.racks }}</td>
+            <td class="text-end">{{ row.devices }}</td>
+            <td class="text-end">
+              <a href="{{ row.url }}" class="btn btn-sm btn-primary"><i class="mdi mdi-floor-plan"></i> Room View</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6" class="text-center text-muted py-4">No locations contain racks yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
