@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('dcim', '0241_nullify_empty_cable_end'),
+        ('dcim', '0233_device_render_config_permission'),
     ]
 
     operations = [
