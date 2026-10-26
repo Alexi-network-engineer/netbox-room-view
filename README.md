@@ -69,16 +69,16 @@ The plugin ships as a single file, a Python wheel, attached to each [GitHub rele
 2. **Copy it to the NetBox server.** Either drag and drop it into `/tmp` with WinSCP, or use the `scp` built into PowerShell:
 
    ```powershell
-   scp $HOME\Downloads\netbox_room_view-0.1.0-py3-none-any.whl you@netbox-server:/tmp/
+   scp $HOME\Downloads\netbox_room_view-0.1.1-py3-none-any.whl you@netbox-server:/tmp/
    ```
 
 3. **On the server**, keep the wheel somewhere permanent and install it into NetBox's virtual environment. `--no-index` stops pip from trying to reach the internet:
 
    ```bash
    sudo mkdir -p /opt/netbox/plugins
-   sudo mv /tmp/netbox_room_view-0.1.0-py3-none-any.whl /opt/netbox/plugins/
-   sudo /opt/netbox/venv/bin/pip install --no-index /opt/netbox/plugins/netbox_room_view-0.1.0-py3-none-any.whl
-   echo /opt/netbox/plugins/netbox_room_view-0.1.0-py3-none-any.whl | sudo tee -a /opt/netbox/local_requirements.txt
+   sudo mv /tmp/netbox_room_view-0.1.1-py3-none-any.whl /opt/netbox/plugins/
+   sudo /opt/netbox/venv/bin/pip install --no-index /opt/netbox/plugins/netbox_room_view-0.1.1-py3-none-any.whl
+   echo /opt/netbox/plugins/netbox_room_view-0.1.1-py3-none-any.whl | sudo tee -a /opt/netbox/local_requirements.txt
    ```
 
    The last line makes NetBox's `upgrade.sh` reinstall the plugin after a NetBox upgrade.
@@ -112,6 +112,18 @@ The plugin ships as a single file, a Python wheel, attached to each [GitHub rele
 - Set **outer width** and **outer depth** on your racks or rack types so they are drawn to size. Without them, racks default to 600 mm wide (800 mm for 23" racks) and 1200 mm deep.
 - **Power used** comes from NetBox's rack power utilisation. It needs power feeds assigned to the rack, cabled through to device power ports that have an allocated draw. Racks without feeds show as grey in power mode.
 - Room View treats any location that directly contains racks as a room.
+
+### Upgrading
+
+Copy the new wheel to `/opt/netbox/plugins/` as in step 3, then install it and apply any new migrations:
+
+```bash
+sudo /opt/netbox/venv/bin/pip install --no-index /opt/netbox/plugins/netbox_room_view-<version>-py3-none-any.whl
+sudo /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py migrate
+sudo systemctl restart netbox netbox-rq
+```
+
+Also update the wheel path in `/opt/netbox/local_requirements.txt` to the new file, so `upgrade.sh` doesn't reinstall the old version.
 
 ### Uninstalling
 

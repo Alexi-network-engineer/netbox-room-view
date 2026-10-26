@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "netbox-room-view"
-version = "0.1.0"
+version = "0.1.1"
 description = "dcTrack-style floor plan and rack elevation view for NetBox comms rooms, with drag and drop"
 readme = "README.md"
 requires-python = ">=3.12"

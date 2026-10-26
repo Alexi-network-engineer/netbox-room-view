@@ -5,7 +5,7 @@ class RoomViewConfig(PluginConfig):
     name = 'netbox_room_view'
     verbose_name = 'Room View'
     description = 'Floor plan and rack elevation view for comms rooms, with drag and drop'
-    version = '0.1.0'
+    version = '0.1.1'
     author = 'Networks Team'
     base_url = 'room-view'
     min_version = '4.6.0'
